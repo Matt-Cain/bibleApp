@@ -14,11 +14,24 @@ const Tab = createBottomTabNavigator();
 const CustomTabBarButton = ({ children, onPress }) => (
   <TouchableOpacity
     style={{
-      top: -30,
+      top: -45,
+      justifyContent: "center",
+      alignItems: "center",
+      elevation: 5,
     }}
     onPress={onPress}
   >
-    <View>{children}</View>
+    <View
+      style={{
+        width: 75,
+        height: 75,
+        borderRadius: 37.5,
+        backgroundColor: "white",
+        ...styles.shadow,
+      }}
+    >
+      {children}
+    </View>
   </TouchableOpacity>
 );
 
@@ -33,7 +46,7 @@ const Tabs = () => {
           left: 20,
           right: 20,
           elevation: 0,
-          backgroundColor: "#fff",
+          backgroundColor: "black",
           borderRadius: 15,
           height: 90,
           ...styles.shadow,
@@ -52,12 +65,11 @@ const Tabs = () => {
               }}
             >
               <Icon
-                name="plus"
+                name="home"
                 type="font-awesome"
-                color={focused ? "black" : "grey"}
-                size={20}
+                color={focused ? "black" : "white"}
+                size={30}
               />
-              <Text>HOME</Text>
             </View>
           ),
         }}
@@ -74,12 +86,11 @@ const Tabs = () => {
               }}
             >
               <Icon
-                name="plus"
+                name="search"
                 type="font-awesome"
-                color={focused ? "black" : "grey"}
-                size={20}
+                color={focused ? "black" : "white"}
+                size={30}
               />
-              <Text>FIND</Text>
             </View>
           ),
         }}
@@ -89,21 +100,14 @@ const Tabs = () => {
         component={PostScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Icon
-                name="plus"
-                type="font-awesome"
-                color={focused ? "black" : "grey"}
-                size={20}
-              />
-              <Text>POST</Text>
-            </View>
+            <Icon
+              name="plus"
+              type="font-awesome"
+              color={"#adefd1ff"}
+              size={30}
+            />
           ),
+          tabBarButton: (props) => <CustomTabBarButton {...props} />,
         }}
       />
       <Tab.Screen
@@ -120,10 +124,9 @@ const Tabs = () => {
               <Icon
                 name="plus"
                 type="font-awesome"
-                color={focused ? "black" : "grey"}
-                size={20}
+                color={focused ? "black" : "white"}
+                size={30}
               />
-              <Text>CHAT</Text>
             </View>
           ),
         }}
@@ -137,15 +140,15 @@ const Tabs = () => {
               style={{
                 alignItems: "center",
                 justifyContent: "center",
+                elevation: 5,
               }}
             >
               <Icon
-                name="plus"
+                name="cog"
                 type="font-awesome"
-                color={focused ? "black" : "grey"}
-                size={20}
+                color={focused ? "black" : "white"}
+                size={30}
               />
-              <Text>SETTINGS</Text>
             </View>
           ),
         }}
@@ -156,12 +159,12 @@ const Tabs = () => {
 
 const styles = StyleSheet.create({
   shadow: {
-    shadowColor: "#7F5DF0",
+    shadowColor: "black",
     shadowOffset: {
-      width: 0,
+      width: 10,
       height: 10,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 3.5,
     elevation: 5,
   },
