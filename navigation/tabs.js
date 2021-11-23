@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { colors, Icon } from "react-native-elements";
 
 import { useTheme } from "../context/ThemeProvider";
 
@@ -24,14 +24,25 @@ const CustomTabBarButton = ({ children, onPress }) => (
   >
     <View
       style={{
-        width: 75,
-        height: 75,
-        borderRadius: 37.5,
-        backgroundColor: "white",
-        ...styles.shadow,
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#121212",
       }}
     >
-      {children}
+      <View
+        style={{
+          width: 75,
+          height: 75,
+          borderRadius: 37.5,
+          backgroundColor: "white",
+          ...styles.shadow,
+        }}
+      >
+        {children}
+      </View>
     </View>
   </TouchableOpacity>
 );
