@@ -1,14 +1,22 @@
 export const lightColors = {
-  background: "#FFFFFF",
-  primary: "#512DA8",
-  text: "#121212",
-  error: "#D32F2F",
+  background: "#FAF9F6",
+  menuBackground: "#0a192f",
+  primary: "#64ffda",
+  icon: "#64ffda",
+  iconSelected: "white",
+  addButton: "#64ffda",
+  text: "black",
+  error: "#EF9A9A",
 };
 
 // Dark theme colors
 export const darkColors = {
-  background: "black",
-  primary: "#B39DDB",
-  text: "#FFFFFF",
+  background: "#121212",
+  menuBackground: "#161b22",
+  primary: "#64ffda",
+  icon: "#f6f7f9",
+  iconSelected: "#64ffda",
+  addButton: "#64ffda",
+  text: "#c9d1d9",
   error: "#EF9A9A",
 };
