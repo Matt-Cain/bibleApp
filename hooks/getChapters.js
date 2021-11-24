@@ -1,20 +1,22 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-export default function getBible() {
+export default function getChapters(book, bible) {
   const [response, setResponse] = useState([]);
   const [error, setError] = useState("");
   const [loading, setloading] = useState(true);
-  const [bible, setBible] = useState("01b29f4b342acc35-01");
-  const [book, setBook] = useState("Genesis");
 
   const fetchData = () => {
+    console.log("get Chapter hook", book, bible);
     axios
-      .get(`https://api.scripture.api.bible/v1/bibles/${bible}/books`, {
-        headers: {
-          "api-key": "fb45b9a22e03b27405b1ec9b8f339a97", //the token is a variable which holds the token
-        },
-      })
+      .get(
+        `https://api.scripture.api.bible/v1/bibles/${bible}/books/${book}/chapters`,
+        {
+          headers: {
+            "api-key": "fb45b9a22e03b27405b1ec9b8f339a97", //the token is a variable which holds the token
+          },
+        }
+      )
       .then((res) => {
         setResponse(res.data);
       })
@@ -23,12 +25,11 @@ export default function getBible() {
       })
       .finally(() => {
         setloading(false);
-        console.log(response.data[0].id);
       });
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [book, bible]);
   return response.data;
 }
