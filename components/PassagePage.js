@@ -7,17 +7,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function BookList({ data, setView, setBook }) {
+import getPassages from "../hooks/getPassages";
+
+export default function PassagePage({ passage, setView }) {
+  const data = getPassages(passage);
   const renderItem = ({ item }) => <Item item={item} />;
   const Item = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity
         onPress={() => {
-          setBook(item.id);
-          setView("chapter-page");
+          setView("book-page");
         }}
       >
-        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.title}>{item.text}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -28,7 +30,7 @@ export default function BookList({ data, setView, setBook }) {
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.verse}
         />
       ) : (
         <View></View>
@@ -49,16 +51,13 @@ const styles = StyleSheet.create({
   },
   item: {
     color: "white",
-    backgroundColor: "white",
+    backgroundColor: "#121212",
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 20,
   },
   title: {
     fontSize: 20,
-    color: "#121212",
+    color: "white",
   },
 });

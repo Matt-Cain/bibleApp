@@ -7,17 +7,28 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function BookList({ data, setView, setBook }) {
-  const renderItem = ({ item }) => <Item item={item} />;
-  const Item = ({ item }) => (
+import getChapters from "../hooks/getChapters";
+
+export default function ChapterList({ setView, setChapter, book, bible }) {
+  console.log("chapterlist", book);
+  const data = getChapters(book, bible);
+  const renderItem = ({ item, index }) => <Item index={index} item={item} />;
+  const Item = ({ item, index }) => (
     <View style={styles.item}>
+      {console.log("bookId", item.reference)}
       <TouchableOpacity
         onPress={() => {
-          setBook(item.id);
-          setView("chapter-page");
+          setChapter(item.reference);
+          setView("passage-page");
         }}
       >
-        <Text style={styles.title}>{item.name}</Text>
+        {!index ? (
+          <Text style={[styles.title, { textAlign: "center" }]}>
+            -- {item.reference} --
+          </Text>
+        ) : (
+          <Text style={styles.title}>Chapter {index}</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
