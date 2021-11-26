@@ -5,6 +5,8 @@ export const lightColors = {
   icon: "#64ffda",
   iconSelected: "white",
   addButton: "#64ffda",
+  addButtonCenter: "#161b22",
+  borderColor: "#161b22",
   text: "black",
   error: "#EF9A9A",
 };
@@ -17,6 +19,8 @@ export const darkColors = {
   icon: "#f6f7f9",
   iconSelected: "#64ffda",
   addButton: "#64ffda",
+  addButtonCenter: "white",
+  borderColor: "#64ffda",
   text: "#c9d1d9",
   error: "#EF9A9A",
 };

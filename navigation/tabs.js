@@ -13,42 +13,44 @@ import PostScreen from "../screens/PostScreen";
 
 const Tab = createBottomTabNavigator();
 
-const CustomTabBarButton = ({ children, onPress }) => (
-  <TouchableOpacity
-    style={{
-      top: -40,
+const Tabs = () => {
+  const { colors, isDark } = useTheme();
 
-      elevation: 5,
-    }}
-    onPress={console.log("hello")}
-  >
-    <View
+  const CustomTabBarButton = ({ children, onPress }) => (
+    <TouchableOpacity
       style={{
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#121212",
+        top: -40,
+
+        elevation: 5,
+      }}
+      onPress={() => {
+        alert("click");
       }}
     >
       <View
         style={{
-          width: 75,
-          height: 75,
-          borderRadius: 37.5,
-          backgroundColor: "white",
-          ...styles.shadow,
+          width: 100,
+          height: 100,
+          borderRadius: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: colors.background,
         }}
       >
-        {children}
+        <View
+          style={{
+            width: 75,
+            height: 75,
+            borderRadius: 37.5,
+            backgroundColor: colors.addButton,
+            ...styles.shadow,
+          }}
+        >
+          {children}
+        </View>
       </View>
-    </View>
-  </TouchableOpacity>
-);
-
-const Tabs = () => {
-  const { colors, isDark } = useTheme();
+    </TouchableOpacity>
+  );
 
   return (
     <View style={{ flex: 1 }}>
@@ -126,7 +128,7 @@ const Tabs = () => {
                 <Icon
                   name="plus"
                   type="font-awesome"
-                  color={colors.addButton}
+                  color={colors.addButtonCenter}
                   size={30}
                 />
               </View>

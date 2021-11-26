@@ -21,7 +21,12 @@ export default function SearchScreen() {
         <View
           style={[styles.container, { backgroundColor: colors.background }]}
         >
-          <BookList setView={setView} setBook={setBook} data={bookData} />
+          <BookList
+            colors={colors}
+            setView={setView}
+            setBook={setBook}
+            data={bookData}
+          />
         </View>
       );
     case "chapter-page":
@@ -30,6 +35,7 @@ export default function SearchScreen() {
           style={[styles.container, { backgroundColor: colors.background }]}
         >
           <ChapterList
+            colors={colors}
             setView={setView}
             book={book}
             setChapter={setChapter}
@@ -43,6 +49,7 @@ export default function SearchScreen() {
           style={[styles.container, { backgroundColor: colors.background }]}
         >
           <PassagePage
+            colors={colors}
             passage={chapter}
             setPassage={setPassage}
             setView={setView}

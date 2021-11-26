@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function BookList({ data, setView, setBook }) {
+export default function BookList({ data, setView, setBook, colors }) {
   const renderItem = ({ item }) => <Item item={item} />;
   const Item = ({ item }) => (
     <View style={styles.item}>
@@ -23,7 +23,12 @@ export default function BookList({ data, setView, setBook }) {
   );
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: colors.background, borderColor: colors.borderColor },
+      ]}
+    >
       {data ? (
         <FlatList
           data={data}
