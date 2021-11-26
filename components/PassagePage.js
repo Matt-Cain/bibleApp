@@ -10,13 +10,20 @@ import {
 import getPassages from "../hooks/getPassages";
 
 export default function PassagePage({ passage, setView }) {
+  const [selectedPassageId, setSelectedPassageId] = React.useState(null);
+
   const data = getPassages(passage);
-  const renderItem = ({ item }) => <Item item={item} />;
-  const Item = ({ item }) => (
-    <View style={styles.item}>
+
+  const renderItem = ({ item, index }) => <Item index={index} item={item} />;
+
+  const Item = ({ item, index }) => (
+    <View
+      style={[styles.item, index === selectedPassageId ? styles.selected : ""]}
+    >
       <TouchableOpacity
         onPress={() => {
-          setView("book-page");
+          setSelectedPassageId(index);
+          // setView("book-page");
         }}
       >
         <Text style={styles.title}>{item.text}</Text>
@@ -55,9 +62,17 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
+    borderRadius: 20,
   },
   title: {
     fontSize: 20,
     color: "white",
+  },
+  selected: {
+    position: "relative",
+    borderColor: "#64ffda",
+    borderWidth: 3,
+    top: -3,
+    bottom: -3,
   },
 });
