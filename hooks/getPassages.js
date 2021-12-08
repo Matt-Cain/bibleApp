@@ -17,7 +17,6 @@ export default function getPassages(passage) {
       })
       .finally(() => {
         setloading(false);
-        console.log(response);
       });
   };
 

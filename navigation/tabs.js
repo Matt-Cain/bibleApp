@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { colors, Icon } from "react-native-elements";
 
 import { useTheme } from "../context/ThemeProvider";
+import { NavButtonContext } from "../context/NavButtonContext";
 
 import ArchiveScreen from "../screens/ArchiveScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -15,6 +16,8 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   const { colors, isDark } = useTheme();
+  const [navButtonState, setNavButtonState] =
+    React.useContext(NavButtonContext);
 
   const CustomTabBarButton = ({ children, onPress }) => (
     <TouchableOpacity
@@ -24,7 +27,8 @@ const Tabs = () => {
         elevation: 5,
       }}
       onPress={() => {
-        alert("click");
+        setNavButtonState(true);
+        alert(navButtonState);
       }}
     >
       <View

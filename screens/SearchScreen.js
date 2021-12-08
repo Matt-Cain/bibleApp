@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, ScrollView, View } from "react-native";
 import { useTheme } from "../context/ThemeProvider";
 import getBooks from "../hooks/getBooks";
 import BookList from "../components/BookList";
 import ChapterList from "../components/ChapterList";
 import PassagePage from "../components/PassagePage";
+import { ScriptureContext } from "../context/ScriptureContext";
 
 export default function SearchScreen() {
-  const [bible, setBible] = useState("01b29f4b342acc35-01");
+  const { dispatch } = useContext(ScriptureContext);
+  const [bible] = useState("01b29f4b342acc35-01");
   const [book, setBook] = useState("GEN");
   const [chapter, setChapter] = useState("Genesis 1");
   const [passage, setPassage] = useState("Genesis+1");
+  const [text, setText] = useState("");
   const [view, setView] = useState("book-page");
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
   const bookData = getBooks();
 
   switch (view) {
@@ -52,6 +55,7 @@ export default function SearchScreen() {
             colors={colors}
             passage={chapter}
             setPassage={setPassage}
+            setText={setText}
             setView={setView}
           />
         </View>

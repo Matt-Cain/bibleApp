@@ -7,7 +7,6 @@ export default function getChapters(book, bible) {
   const [loading, setloading] = useState(true);
 
   const fetchData = () => {
-    console.log("get Chapter hook", book, bible);
     axios
       .get(
         `https://api.scripture.api.bible/v1/bibles/${bible}/books/${book}/chapters`,

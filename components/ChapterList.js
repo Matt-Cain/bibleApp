@@ -10,12 +10,10 @@ import {
 import getChapters from "../hooks/getChapters";
 
 export default function ChapterList({ setView, setChapter, book, bible }) {
-  console.log("chapterlist", book);
   const data = getChapters(book, bible);
   const renderItem = ({ item, index }) => <Item index={index} item={item} />;
   const Item = ({ item, index }) => (
     <View style={styles.item}>
-      {console.log("bookId", item.reference)}
       <TouchableOpacity
         onPress={() => {
           setChapter(item.reference);

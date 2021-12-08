@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,12 +7,29 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { useIsFocused } from "@react-navigation/native";
+
 import getPassages from "../hooks/getPassages";
+import { NavButtonContext } from "../context/NavButtonContext";
+import { ScriptureContext } from "../context/ScriptureContext";
 
 export default function PassagePage({ passage, setView }) {
+  const { dispatch } = useContext(ScriptureContext);
   const [selectedPassageId, setSelectedPassageId] = React.useState(null);
+  const [passageState, setPassageState] = React.useState("");
+  const [scriptureObject, setScriptureObject] = React.useState([]);
+
+  //new use states
+  const [book, setBook] = React.useState("");
+  const [chapter, setChapter] = React.useState("");
+  const [verse, setVerse] = React.useState("");
+  const [text, setText] = React.useState("");
+
+  const [navButtonState, setNavButtonState] =
+    React.useContext(NavButtonContext);
 
   const data = getPassages(passage);
+  const isFocused = useIsFocused();
 
   const renderItem = ({ item, index }) => <Item index={index} item={item} />;
 
@@ -23,13 +40,34 @@ export default function PassagePage({ passage, setView }) {
       <TouchableOpacity
         onPress={() => {
           setSelectedPassageId(index);
+          setPassageState(item);
+          // setScriptureObject(item);
           // setView("book-page");
+          setBook(item.bookname);
+          setChapter(item.chapter);
+          setVerse(item.verse);
+          setText(item.text);
+          console.log("newtext", text);
         }}
       >
         <Text style={styles.title}>{item.text}</Text>
       </TouchableOpacity>
     </View>
   );
+
+  if (navButtonState === true && selectedPassageId !== null && isFocused) {
+    dispatch({
+      type: "ADD_SCRIPTURE",
+      scripture: {
+        book,
+        chapter,
+        verse,
+        text,
+      },
+    });
+    alert(selectedPassageId);
+    setNavButtonState(false);
+  }
 
   return (
     <View style={styles.container}>
