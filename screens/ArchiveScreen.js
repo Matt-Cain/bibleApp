@@ -1,96 +1,67 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   FlatList,
   TouchableOpacity,
+  Image,
+  SafeAreaView,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
-import { useTheme } from "../context/ThemeProvider";
-import { useIsFocused } from "@react-navigation/native";
-import { NavButtonContext } from "../context/NavButtonContext";
-import { ScriptureContext } from "../context/ScriptureContext";
+import { getBooks, addBookmark, removeBookmark } from "../redux/actions";
 
 const ArchiveScreen = () => {
-  const { scriptures } = useContext(ScriptureContext);
-  console.log("lopp", scriptures);
-  const { colors, isDark } = useTheme();
-  const [data, setData] = React.useState("blank");
-  const isFocused = useIsFocused();
+  const { books, bookmarks } = useSelector((state) => state.booksReducer);
+  const dispatch = useDispatch();
 
-  const [navButtonState, setNavButtonState] =
-    React.useContext(NavButtonContext);
+  const fetchBooks = () => dispatch(getBooks());
+  const addToBookmarkList = (book) => dispatch(addBookmark(book));
+  const removeFromBookmarkList = (book) => dispatch(removeBookmark(book));
 
-  const renderItem = ({ item, index }) => <Item index={index} item={item} />;
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
-  const Item = ({ item, index }) => (
-    <View style={styles.item}>
-      <TouchableOpacity
-        onPress={() => {
-          // setSelectedPassageId(index);
-          // setPassageText(item.text);
-          // setView("book-page");
-        }}
-      >
-        <Text style={styles.title}>{item.book}</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  const handleAddBookmark = (book) => {
+    addToBookmarkList(book);
+  };
 
-  // if (navButtonState === true && selectedPassageId !== null && isFocused) {
-  //   storeData(passageText.toString());
-  //   alert(selectedPassageId);
-  //   setNavButtonState(false);
-  // }
+  const handleRemoveBookmark = (book) => {
+    removeFromBookmarkList(book);
+  };
+
+  const ifExists = (book) => {
+    if (bookmarks.filter((item) => item.id === book.id).length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={{ marginVertical: 12 }}>
+        <Text>{item.text}</Text>
+      </View>
+    );
+  };
 
   return (
-    <View style={styles.container}>
-      <Text>{scriptures.text}</Text>
-      {scriptures.length ? (
-        <FlatList
-          data={scriptures}
-          renderItem={renderItem}
-          keyExtractor={(item) => item}
-        />
-      ) : (
-        <View>
-          <Text>hello</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#1E1B26" }}>
+      <View style={{ flex: 1, paddingHorizontal: 16 }}>
+        <Text style={{ color: "white", fontSize: 22 }}>Bestsellers</Text>
+        <View style={{ flex: 1, marginTop: 8 }}>
+          <FlatList
+            data={books}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+          />
         </View>
-      )}
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: 160,
-    marginTop: 20,
-    backgroundColor: "#121212",
-    borderColor: "#64ffda",
-    borderBottomWidth: 3,
-    borderTopWidth: 3,
-  },
-  item: {
-    color: "white",
-    backgroundColor: "#121212",
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 20,
-  },
-  title: {
-    fontSize: 20,
-    color: "white",
-  },
-  selected: {
-    position: "relative",
-    borderColor: "#64ffda",
-    borderWidth: 3,
-    top: -3,
-    bottom: -3,
-  },
-});
 
 export default ArchiveScreen;

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -7,14 +8,32 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import {
+  getBooks,
+  addBookmark,
+  removeBookmark,
+  addBook,
+} from "../redux/actions";
+
 import { useIsFocused } from "@react-navigation/native";
 
 import getPassages from "../hooks/getPassages";
 import { NavButtonContext } from "../context/NavButtonContext";
-import { ScriptureContext } from "../context/ScriptureContext";
+// import { ScriptureContext } from "../context/ScriptureContext";
 
 export default function PassagePage({ passage, setView }) {
-  const { dispatch } = useContext(ScriptureContext);
+  const dispatch = useDispatch();
+
+  const addBookToList = (book) => dispatch(addBook(book));
+
+  const handleAddBook = (book) => {
+    console.log("handleAddBook", book);
+    addBookToList(book);
+  };
+
+  const addToBookmarkList = (book) => dispatch(addBookmark(book));
+
+  // const { dispatch } = useContext(ScriptureContext);
   const [selectedPassageId, setSelectedPassageId] = React.useState(null);
   const [passageState, setPassageState] = React.useState("");
   const [scriptureObject, setScriptureObject] = React.useState([]);
@@ -41,7 +60,7 @@ export default function PassagePage({ passage, setView }) {
         onPress={() => {
           setSelectedPassageId(index);
           setPassageState(item);
-          // setScriptureObject(item);
+          setScriptureObject(item);
           // setView("book-page");
           setBook(item.bookname);
           setChapter(item.chapter);
@@ -56,15 +75,7 @@ export default function PassagePage({ passage, setView }) {
   );
 
   if (navButtonState === true && selectedPassageId !== null && isFocused) {
-    dispatch({
-      type: "ADD_SCRIPTURE",
-      scripture: {
-        book,
-        chapter,
-        verse,
-        text,
-      },
-    });
+    handleAddBook(scriptureObject);
     alert(selectedPassageId);
     setNavButtonState(false);
   }

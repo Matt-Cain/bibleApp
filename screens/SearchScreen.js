@@ -5,10 +5,9 @@ import getBooks from "../hooks/getBooks";
 import BookList from "../components/BookList";
 import ChapterList from "../components/ChapterList";
 import PassagePage from "../components/PassagePage";
-import { ScriptureContext } from "../context/ScriptureContext";
+// import { ScriptureContext } from "../context/ScriptureContext";
 
 export default function SearchScreen() {
-  const { dispatch } = useContext(ScriptureContext);
   const [bible] = useState("01b29f4b342acc35-01");
   const [book, setBook] = useState("GEN");
   const [chapter, setChapter] = useState("Genesis 1");
