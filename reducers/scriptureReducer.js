@@ -1,22 +1,20 @@
 import { v4 as uuid } from "uuid";
 
-const initialState = {
-  books: [],
-  bookmarks: [],
-};
-
-export const scriptureReducer = (state = { book }, action) => {
+export const scriptureReducer = (state, action) => {
   switch (action.type) {
+    case "SET_INITIAL_STATE":
+      console.log("add initial state data", action.data);
+      return action.data;
+
     case "ADD_SCRIPTURE":
-      return [
-        ...state,
-        {
-          book: action.scripture.book,
-          chapter: action.scripture.chapter,
-          verse: action.scripture.verse,
-          text: action.scripture.text,
-        },
-      ];
+      console.log("add scripture data", action.scripture);
+      return {
+        bookmarkList: [...state.bookmarkList.filter((f) => f !== undefined)],
+        scriptureList: [
+          ...state.scriptureList.filter((f) => f !== undefined),
+          action.scripture,
+        ],
+      };
     case "REMOVE_SCRIPTURE":
       return state.filter((scripture) => scripture.id !== action.id);
     default:

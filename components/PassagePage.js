@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import uuid from "react-native-uuid";
+
 import { useIsFocused } from "@react-navigation/native";
 
 import getPassages from "../hooks/getPassages";
@@ -47,7 +49,6 @@ export default function PassagePage({ passage, setView }) {
           setChapter(item.chapter);
           setVerse(item.verse);
           setText(item.text);
-          console.log("newtext", text);
         }}
       >
         <Text style={styles.title}>{item.text}</Text>
@@ -63,6 +64,7 @@ export default function PassagePage({ passage, setView }) {
         chapter,
         verse,
         text,
+        id: uuid.v1(),
       },
     });
     alert(selectedPassageId);

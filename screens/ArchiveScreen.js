@@ -13,8 +13,26 @@ import { NavButtonContext } from "../context/NavButtonContext";
 import { ScriptureContext } from "../context/ScriptureContext";
 
 const ArchiveScreen = () => {
-  const { scriptures } = useContext(ScriptureContext);
-  console.log("lopp", scriptures);
+  const sData = [
+    {
+      book: "John",
+      chapter: "1",
+      verse: "1",
+      text: "In the beginning was the Word, and the Word was with God, and the Word was God.",
+    },
+    {
+      book: "John",
+      chapter: "1",
+      verse: "1",
+      text: "In the beginning was the Word, and the Word was with God, and the Word was God.",
+    },
+  ];
+
+  const { scripture } = useContext(ScriptureContext);
+  const { scriptureList, bookmarkList } = scripture;
+  console.log("Archive screen scripture list data", scriptureList);
+  console.log("JSON", scripture);
+
   const { colors, isDark } = useTheme();
   const [data, setData] = React.useState("blank");
   const isFocused = useIsFocused();
@@ -33,7 +51,12 @@ const ArchiveScreen = () => {
           // setView("book-page");
         }}
       >
-        <Text style={styles.title}>{item.book}</Text>
+        <View style={styles.passage}>
+          <Text style={styles.title}>{item.book}</Text>
+          <Text style={styles.title}>{item.chapter}</Text>
+          <Text style={styles.title}>{item.verse}</Text>
+          <Text style={styles.title}>{item.text}</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -46,10 +69,9 @@ const ArchiveScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{scriptures.text}</Text>
-      {scriptures.length ? (
+      {scriptureList ? (
         <FlatList
-          data={scriptures}
+          data={scriptureList}
           renderItem={renderItem}
           keyExtractor={(item) => item}
         />
@@ -90,6 +112,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     top: -3,
     bottom: -3,
+  },
+  passage: {
+    backgroundColor: "#121212",
   },
 });
 
