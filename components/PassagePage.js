@@ -44,7 +44,6 @@ export default function PassagePage({ passage, setView }) {
           setSelectedPassageId(index);
           setPassageState(item);
           // setScriptureObject(item);
-          // setView("book-page");
           setBook(item.bookname);
           setChapter(item.chapter);
           setVerse(item.verse);
@@ -67,8 +66,8 @@ export default function PassagePage({ passage, setView }) {
         id: uuid.v1(),
       },
     });
-    alert(selectedPassageId);
     setNavButtonState(false);
+    setView("book-page");
   }
 
   return (

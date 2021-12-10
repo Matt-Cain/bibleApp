@@ -8,12 +8,11 @@ import PassagePage from "../components/PassagePage";
 import { ScriptureContext } from "../context/ScriptureContext";
 
 export default function SearchScreen() {
-  const { dispatch } = useContext(ScriptureContext);
   const [bible] = useState("01b29f4b342acc35-01");
   const [book, setBook] = useState("GEN");
   const [chapter, setChapter] = useState("Genesis 1");
-  const [passage, setPassage] = useState("Genesis+1");
-  const [text, setText] = useState("");
+  const [setPassage] = useState("Genesis+1");
+  const [setText] = useState("");
   const [view, setView] = useState("book-page");
   const { colors } = useTheme();
   const bookData = getBooks();
