@@ -33,14 +33,14 @@ const ArchiveScreen = () => {
   };
   const handleAddBookmark = (book) => {
     dispatch({
-      type: ADD_TO_BOOKMARK_LIST,
+      type: "ADD_TO_BOOKMARK_LIST",
       payload: book,
     });
   };
 
   const handleRemoveBookmark = (book) => {
     dispatch({
-      type: REMOVE_FROM_BOOKMARK_LIST,
+      type: "REMOVE_FROM_BOOKMARK_LIST",
       payload: book,
     });
   };
@@ -81,7 +81,7 @@ const ArchiveScreen = () => {
               activeOpacity={0.7}
             >
               <Icon
-                color={ifExists(item) ? "white" : "#64ffda"}
+                color="#64ffda"
                 size={20}
                 name={!ifExists(item) ? "star-outline" : "star"}
               />
@@ -94,7 +94,8 @@ const ArchiveScreen = () => {
             >
               <Icon
                 style={{ paddingLeft: 10 }}
-                color={ifExists(item) ? "white" : "#64ffda"}
+                color="#64ffda"
+                // color={ifExists(item) ? "white" : "#64ffda"}
                 size={20}
                 name="trash"
               />

@@ -23,12 +23,19 @@ export const scriptureReducer = (state, action) => {
           ...state.scriptureList.filter((f) => f.id !== action.payload.id),
         ],
       };
-      return state.filter((scripture) => scripture.id !== action.id);
     case "ADD_TO_BOOKMARK_LIST":
-      return state;
-    case "REMOVE_FROM_BOOKMARK_LIST":
-      return state;
+      return {
+        bookmarkList: [...state.bookmarkList, action.payload],
+        scriptureList: [...state.scriptureList],
+      };
 
+    case "REMOVE_FROM_BOOKMARK_LIST":
+      return {
+        bookmarkList: [
+          ...state.bookmarkList.filter((f) => f.id !== action.payload.id),
+        ],
+        scriptureList: [...state.scriptureList],
+      };
     default:
       return state;
   }
