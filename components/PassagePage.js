@@ -11,7 +11,7 @@ import uuid from "react-native-uuid";
 
 import { useIsFocused } from "@react-navigation/native";
 
-import getPassages from "../hooks/getPassages";
+import getData from "../hooks/getData";
 import { NavButtonContext } from "../context/NavButtonContext";
 import { ScriptureContext } from "../context/ScriptureContext";
 
@@ -29,8 +29,9 @@ export default function PassagePage({ passage, setView }) {
 
   const [navButtonState, setNavButtonState] =
     React.useContext(NavButtonContext);
-
-  const data = getPassages(passage);
+  const param = passage.replace(" ", "+");
+  const url = `http://labs.bible.org/api/?passage=${param}&type=json`;
+  const data = getData(url, false);
   const isFocused = useIsFocused();
 
   const renderItem = ({ item, index }) => <Item index={index} item={item} />;

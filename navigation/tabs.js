@@ -152,8 +152,8 @@ const Tabs = () => {
                 }}
               >
                 <Icon
-                  name="search"
-                  type="font-awesome"
+                  name="book"
+                  type="ionicon"
                   color={focused ? colors.iconSelected : colors.icon}
                   size={30}
                 />

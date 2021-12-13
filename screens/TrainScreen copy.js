@@ -1,14 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Image,
-  Modal,
-  StyleSheet,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
-import Voice from "@react-native-voice/voice";
+import React, { useEffect, useRef } from "react";
+import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { useTheme } from "../context/ThemeProvider";
 import CardFlip from "react-native-card-flip";
 
@@ -17,14 +8,11 @@ import getSimilarWords from "../hooks/getSimilarWords";
 const TrainScreen = ({ route, navigation }) => {
   const { item } = route.params;
 
-  const [isTraining, setIsTraining] = useState(false);
+  const [isTraining, setIsTraining] = React.useState(false);
 
   const [isRecord, setIsRecord] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState("");
-  const buttonLabel = isRecord ? "Stop" : "Start";
-
-  const voiceLabel = text ? text : isRecord ? "" : "";
 
   const { colors, isDark } = useTheme();
   const card = useRef(null);
@@ -108,7 +96,7 @@ const TrainScreen = ({ route, navigation }) => {
             <Text style={styles.title}>{item.chapter}:</Text>
             <Text style={styles.title}>{item.verse} </Text>
           </View>
-          <Text style={styles.bibleText}>{text}</Text>
+          <Text style={styles.bibleText}>{item.text}</Text>
         </TouchableOpacity>
       </CardFlip>
       <TouchableOpacity
@@ -116,7 +104,6 @@ const TrainScreen = ({ route, navigation }) => {
         onPress={() => {
           card.current.flip();
           setIsTraining((prevState) => (prevState = !prevState));
-          !isTraining && onRecordVoice();
         }}
       >
         <Text style={{ color: "#64ffda", fontWeight: "bold" }}>
