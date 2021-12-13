@@ -3,23 +3,17 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { useTheme } from "../context/ThemeProvider";
 import { Toggle } from "../components/Toggle";
 
-const PostScreen = () => {
+const TrainScreen = ({ route, navigation }) => {
   const { colors, isDark } = useTheme();
-
+  const { item } = route.params;
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text>Post Screen</Text>
-      <Toggle style={{ margin: 50 }} />
-      <Button
-        style={{ marginVertical: 50 }}
-        title="Click Me"
-        onPress={() => alert("Clicked")}
-      />
+      <Text>{item.text}</Text>
     </View>
   );
 };
 
-export default PostScreen;
+export default TrainScreen;
 
 const styles = StyleSheet.create({
   container: {

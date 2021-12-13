@@ -14,7 +14,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { NavButtonContext } from "../context/NavButtonContext";
 import { ScriptureContext } from "../context/ScriptureContext";
 
-const FavoritesScreen = () => {
+const FavoritesScreen = ({ navigation }) => {
   const { scripture, dispatch } = useContext(ScriptureContext);
   const { scriptureList, bookmarkList } = scripture;
   console.log("Archive screen scripture list data", scriptureList);

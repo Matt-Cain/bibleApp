@@ -14,7 +14,8 @@ import { useIsFocused } from "@react-navigation/native";
 import { NavButtonContext } from "../context/NavButtonContext";
 import { ScriptureContext } from "../context/ScriptureContext";
 
-const ArchiveScreen = () => {
+const ArchiveScreen = ({ navigation }) => {
+  const [currentIndex, setCurrentIndex] = React.useState(null);
   const { scripture, dispatch } = useContext(ScriptureContext);
   const { scriptureList, bookmarkList } = scripture;
   console.log("Archive screen scripture list data", scriptureList);
@@ -56,12 +57,11 @@ const ArchiveScreen = () => {
   const renderItem = ({ item, index }) => <Item index={index} item={item} />;
 
   const Item = ({ item, index }) => (
-    <View style={styles.item}>
+    <View style={[styles.item, index === currentIndex ? styles.selected : ""]}>
       <TouchableOpacity
+        style={styles.button}
         onPress={() => {
-          // setSelectedPassageId(index);
-          // setPassageText(item.text);
-          // setView("book-page");
+          setCurrentIndex(index === currentIndex ? null : index);
         }}
       >
         <View style={styles.passage}>
@@ -70,7 +70,9 @@ const ArchiveScreen = () => {
             <Text style={styles.title}>{item.chapter}:</Text>
             <Text style={styles.title}>{item.verse} </Text>
           </View>
-          <Text style={styles.text}>{stringTruncate(item.text, 60)}</Text>
+          <Text style={styles.text}>
+            {index === currentIndex ? item.text : stringTruncate(item.text, 60)}
+          </Text>
           <View style={styles.options}>
             <TouchableOpacity
               onPress={() =>
@@ -102,6 +104,21 @@ const ArchiveScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+        {index === currentIndex && (
+          <View style={styles.trainButtonContainer}>
+            <TouchableOpacity
+              style={styles.trainButton}
+              onPress={() => {
+                /* 1. Navigate to the Details route with params */
+                navigation.navigate("Train", { item: item });
+              }}
+            >
+              <Text style={{ color: "#64ffda", fontWeight: "bold" }}>
+                TRAIN
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -135,6 +152,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  button: {
+    flex: 1,
+  },
+  trainButton: {
+    borderColor: "#64ffda",
+
+    // height: 250,
+    borderWidth: 3,
+    borderRadius: 10,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+  },
+  trainButtonContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   info: {
     flexDirection: "row",
     padding: 10,
@@ -163,11 +198,9 @@ const styles = StyleSheet.create({
     color: "#64ffda",
   },
   selected: {
-    position: "relative",
     borderColor: "#64ffda",
+    height: 250,
     borderWidth: 3,
-    top: -3,
-    bottom: -3,
   },
   passage: {},
   text: {

@@ -7,7 +7,7 @@ import ChapterList from "../components/ChapterList";
 import PassagePage from "../components/PassagePage";
 import { ScriptureContext } from "../context/ScriptureContext";
 
-export default function SearchScreen() {
+export default function SearchScreen({ navigation }) {
   const [bible] = useState("01b29f4b342acc35-01");
   const [book, setBook] = useState("GEN");
   const [chapter, setChapter] = useState("Genesis 1");
@@ -51,6 +51,7 @@ export default function SearchScreen() {
           style={[styles.container, { backgroundColor: colors.background }]}
         >
           <PassagePage
+            navigation={navigation}
             colors={colors}
             passage={chapter}
             setPassage={setPassage}

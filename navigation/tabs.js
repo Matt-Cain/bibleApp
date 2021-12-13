@@ -10,7 +10,7 @@ import ArchiveScreen from "../screens/ArchiveScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import SearchScreen from "../screens/SearchScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
-import PostScreen from "../screens/PostScreen";
+import TrainScreen from "../screens/TrainScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -119,8 +119,8 @@ const Tabs = () => {
           }}
         />
         <Tab.Screen
-          name="Post"
-          component={PostScreen}
+          name="Train"
+          component={TrainScreen}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
