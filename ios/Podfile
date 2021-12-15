@@ -18,6 +18,8 @@ target 'voice' do
 
   pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'voiceTests' do
     inherit! :complete
     # Pods for testing

@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, ScrollView, View } from "react-native";
 import { useTheme } from "../context/ThemeProvider";
-import getBooks from "../hooks/getBooks";
 import BookList from "../components/BookList";
 import ChapterList from "../components/ChapterList";
 import PassagePage from "../components/PassagePage";
 
-export default function SearchScreen() {
-  const [bible, setBible] = useState("01b29f4b342acc35-01");
+export default function SearchScreen({ navigation }) {
   const [book, setBook] = useState("GEN");
   const [chapter, setChapter] = useState("Genesis 1");
-  const [passage, setPassage] = useState("Genesis+1");
+  const [setPassage] = useState("Genesis+1");
+  const [setText] = useState("");
   const [view, setView] = useState("book-page");
-  const { colors, isDark } = useTheme();
-  const bookData = getBooks();
+  const { colors } = useTheme();
 
   switch (view) {
     case "book-page":
@@ -21,7 +19,7 @@ export default function SearchScreen() {
         <View
           style={[styles.container, { backgroundColor: colors.background }]}
         >
-          <BookList setView={setView} setBook={setBook} data={bookData} />
+          <BookList colors={colors} setView={setView} setBook={setBook} />
         </View>
       );
     case "chapter-page":
@@ -30,10 +28,10 @@ export default function SearchScreen() {
           style={[styles.container, { backgroundColor: colors.background }]}
         >
           <ChapterList
+            colors={colors}
             setView={setView}
             book={book}
             setChapter={setChapter}
-            bible={bible}
           />
         </View>
       );
@@ -43,8 +41,11 @@ export default function SearchScreen() {
           style={[styles.container, { backgroundColor: colors.background }]}
         >
           <PassagePage
+            navigation={navigation}
+            colors={colors}
             passage={chapter}
             setPassage={setPassage}
+            setText={setText}
             setView={setView}
           />
         </View>

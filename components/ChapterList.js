@@ -7,15 +7,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import getChapters from "../hooks/getChapters";
+import getData from "../hooks/getData";
 
-export default function ChapterList({ setView, setChapter, book, bible }) {
-  console.log("chapterlist", book);
-  const data = getChapters(book, bible);
+export default function ChapterList({ setView, setChapter, book }) {
+  const url = `https://api.scripture.api.bible/v1/bibles/01b29f4b342acc35-01/books/${book}/chapters`;
+  const data = getData(url, true);
   const renderItem = ({ item, index }) => <Item index={index} item={item} />;
   const Item = ({ item, index }) => (
     <View style={styles.item}>
-      {console.log("bookId", item.reference)}
       <TouchableOpacity
         onPress={() => {
           setChapter(item.reference);

@@ -7,7 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-export default function BookList({ data, setView, setBook }) {
+import getData from "../hooks/getData";
+
+export default function BookList({ setView, setBook, colors }) {
+  const url = `https://api.scripture.api.bible/v1/bibles/01b29f4b342acc35-01/books`;
+  const data = getData(url, true);
   const renderItem = ({ item }) => <Item item={item} />;
   const Item = ({ item }) => (
     <View style={styles.item}>
@@ -23,7 +27,12 @@ export default function BookList({ data, setView, setBook }) {
   );
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: colors.background, borderColor: colors.borderColor },
+      ]}
+    >
       {data ? (
         <FlatList
           data={data}
