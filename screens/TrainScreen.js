@@ -13,9 +13,12 @@ import { useTheme } from "../context/ThemeProvider";
 import CardFlip from "react-native-card-flip";
 
 import getSimilarWords from "../hooks/getSimilarWords";
+import getCorrectList from "../hooks/getCorrectList";
 
 const TrainScreen = ({ route, navigation }) => {
   const { item } = route.params;
+
+  const [correctList, setCorrectList] = useState([]);
 
   const [isTraining, setIsTraining] = useState(false);
 
@@ -29,8 +32,8 @@ const TrainScreen = ({ route, navigation }) => {
   const { colors, isDark } = useTheme();
   const card = useRef(null);
 
-  const data = getSimilarWords(item.text);
-  console.log(data);
+  const similarWords = getSimilarWords(item.text);
+  console.log("lop", similarWords);
 
   const onSpeechStart = (event) => {
     console.log("onSpeechStart");
@@ -82,6 +85,9 @@ const TrainScreen = ({ route, navigation }) => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
+
+  const List = getCorrectList(item.text, similarWords, text);
+  console.log("correct list", List);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>

@@ -10,11 +10,8 @@ const initialState = {
 const getScriptures = async () => {
   try {
     const data = await AsyncStorage.getItem("books");
-    console.log("Get Storage data", JSON.parse(data));
     return data ? JSON.parse(data) : {};
-  } catch (e) {
-    console.log("Failed to fetch the data from storage");
-  }
+  } catch (e) {}
 };
 
 export const ScriptureContext = createContext();
@@ -27,7 +24,6 @@ const ScriptureContextProvider = (props) => {
   useEffect(() => {
     async function fetchInitialState() {
       const data = await getScriptures();
-      console.log("fethch data", data);
       dispatch({ type: "SET_INITIAL_STATE", data });
     }
     fetchInitialState();
@@ -42,11 +38,8 @@ const ScriptureContextProvider = (props) => {
       } catch (e) {
         // clear error
       }
-
-      console.log("Done.");
     };
     if (scriptureList) {
-      console.log("Writing to storage", JSON.stringify(scripture));
       AsyncStorage.setItem("books", JSON.stringify(scripture));
     }
     // clearAll();

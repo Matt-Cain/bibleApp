@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function getData(url, hasHeader) {
   const [response, setResponse] = useState([]);
@@ -7,7 +7,6 @@ export default function getData(url, hasHeader) {
   const [loading, setloading] = useState(true);
 
   const fetchData = () => {
-    console.log(url);
     axios
       .get(
         url,

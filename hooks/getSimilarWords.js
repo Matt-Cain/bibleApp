@@ -8,6 +8,7 @@ export default function getSimilarWords(text) {
 
   const fetchData = () => {
     const data = text.split(" ");
+    console.log(data);
     const wordArray = [];
 
     data.forEach((word) => {

@@ -28,7 +28,6 @@ const Tabs = () => {
       }}
       onPress={() => {
         setNavButtonState(true);
-        alert(navButtonState);
       }}
     >
       <View
