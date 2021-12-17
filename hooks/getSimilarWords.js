@@ -27,6 +27,7 @@ export default function getSimilarWords(text) {
           setloading(false);
         });
     });
+    console.log("wordArray", wordArray);
     setResponse(wordArray);
   };
 

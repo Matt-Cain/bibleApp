@@ -24,20 +24,24 @@ const TrainScreen = ({ route, navigation }) => {
 
   const [isRecord, setIsRecord] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState("");
+  const [spokenWords, setSpokenWords] = useState("");
   const buttonLabel = isRecord ? "Stop" : "Start";
 
-  const voiceLabel = text ? text : isRecord ? "" : "";
+  const voiceLabel = spokenWords ? spokenWords : isRecord ? "" : "";
 
   const { colors, isDark } = useTheme();
   const card = useRef(null);
 
   const similarWords = getSimilarWords(item.text);
-  console.log("lop", similarWords);
+  console.log("similarWords training page", similarWords);
+
+  const List = getCorrectList(similarWords, spokenWords);
+
+  console.log("correct list", List);
 
   const onSpeechStart = (event) => {
     console.log("onSpeechStart");
-    setText("");
+    setSpokenWords("");
   };
   const onSpeechEnd = () => {
     setIsRecord(false);
@@ -46,7 +50,7 @@ const TrainScreen = ({ route, navigation }) => {
   const onSpeechResults = (event) => {
     console.log(" onSpeechResults", event);
     console.log("onSpeechResults");
-    setText(event.value[0]);
+    setSpokenWords(event.value[0]);
   };
   const onSpeechError = (event) => {
     console.log("onSpeechError");
@@ -65,7 +69,7 @@ const TrainScreen = ({ route, navigation }) => {
 
   const onSpeechPartialResults = (event) => {
     console.log(event.value[0]);
-    setText(event.value[0]);
+    setSpokenWords(event.value[0]);
   };
 
   const onSpeechVolumeChanged = (event) => {
@@ -85,9 +89,6 @@ const TrainScreen = ({ route, navigation }) => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
-
-  const List = getCorrectList(item.text, similarWords, text);
-  console.log("correct list", List);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -114,7 +115,7 @@ const TrainScreen = ({ route, navigation }) => {
             <Text style={styles.title}>{item.chapter}:</Text>
             <Text style={styles.title}>{item.verse} </Text>
           </View>
-          <Text style={styles.bibleText}>{text}</Text>
+          <Text style={styles.bibleText}>{spokenWords}</Text>
         </TouchableOpacity>
       </CardFlip>
       <TouchableOpacity
