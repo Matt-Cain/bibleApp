@@ -15,7 +15,6 @@ import { NavButtonContext } from "../context/NavButtonContext";
 import { ScriptureContext } from "../context/ScriptureContext";
 
 const ArchiveScreen = ({ navigation }) => {
-  console.log("i rendered 3");
   const [currentIndex, setCurrentIndex] = React.useState(null);
   const { scripture, dispatch } = useContext(ScriptureContext);
   const { scriptureList, bookmarkList } = scripture;

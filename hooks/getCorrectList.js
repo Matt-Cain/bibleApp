@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import getSimilarWords from "../hooks/getSimilarWords";
 
 export default function getCorrectList(spokenWords, text) {
-  const [response, setResponse] = useState(["hello"]);
+  const [response, setResponse] = useState([]);
 
   const similarWords = getSimilarWords(text);
 
   const spokenArray = spokenWords.toLowerCase().split(" ");
+  console.log("spokenArray", spokenArray);
 
   let isCorrectList = new Array(spokenArray.length).fill(false);
 
