@@ -12,7 +12,7 @@ import Voice from "@react-native-voice/voice";
 import { useTheme } from "../context/ThemeProvider";
 import CardFlip from "react-native-card-flip";
 
-import getSimilarWords from "../hooks/getSimilarWords";
+// import getSimilarWords from "../hooks/getSimilarWords";
 import getCorrectList from "../hooks/getCorrectList";
 
 const TrainScreen = ({ route, navigation }) => {
@@ -32,12 +32,11 @@ const TrainScreen = ({ route, navigation }) => {
   const { colors, isDark } = useTheme();
   const card = useRef(null);
 
-  const similarWords = getSimilarWords(item.text);
-  console.log("similarWords training page", similarWords);
+  // const similarWords = getSimilarWords(item.text);
+  // console.log("similarWords training page", similarWords);
 
-  const List = getCorrectList(similarWords, spokenWords);
-
-  console.log("correct list", List);
+  const List = getCorrectList(spokenWords, item.text);
+  console.log("List", List);
 
   const onSpeechStart = (event) => {
     console.log("onSpeechStart");
@@ -68,7 +67,6 @@ const TrainScreen = ({ route, navigation }) => {
   };
 
   const onSpeechPartialResults = (event) => {
-    console.log(event.value[0]);
     setSpokenWords(event.value[0]);
   };
 
@@ -123,6 +121,8 @@ const TrainScreen = ({ route, navigation }) => {
         onPress={() => {
           card.current.flip();
           setIsTraining((prevState) => (prevState = !prevState));
+          setSpokenWords("");
+          Voice.stop();
           !isTraining && onRecordVoice();
         }}
       >

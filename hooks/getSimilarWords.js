@@ -12,13 +12,13 @@ export default function getSimilarWords(text) {
       w.replace(/[^a-zA-Z]+/g, "")
     );
 
-    const wordArray = [];
+    let wordArray = new Array(verseArray.length);
 
-    verseArrayWithoutSymbols.forEach((word) => {
+    verseArrayWithoutSymbols.forEach((word, i) => {
       axios
         .get(`http://api.datamuse.com/words?sl=${word}`)
         .then((res) => {
-          wordArray.push(res.data);
+          wordArray[i] = res.data;
         })
         .catch((err) => {
           setError(err);
@@ -27,7 +27,6 @@ export default function getSimilarWords(text) {
           setloading(false);
         });
     });
-    console.log("wordArray", wordArray);
     setResponse(wordArray);
   };
 
