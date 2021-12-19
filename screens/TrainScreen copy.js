@@ -18,7 +18,6 @@ const TrainScreen = ({ route, navigation }) => {
   const card = useRef(null);
 
   const data = getSimilarWords(item.text);
-  console.log(data);
 
   const onSpeechStart = (event) => {
     console.log("onSpeechStart");

@@ -12,32 +12,28 @@ import Voice from "@react-native-voice/voice";
 import { useTheme } from "../context/ThemeProvider";
 import CardFlip from "react-native-card-flip";
 
-import getSimilarWords from "../hooks/getSimilarWords";
+// import getSimilarWords from "../hooks/getSimilarWords";
 import getCorrectList from "../hooks/getCorrectList";
 
 const TrainScreen = ({ route, navigation }) => {
-  const { item } = route.params;
-
-  const [correctList, setCorrectList] = useState([]);
-
   const [isTraining, setIsTraining] = useState(false);
-
   const [isRecord, setIsRecord] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState("");
-  const buttonLabel = isRecord ? "Stop" : "Start";
+  const [spokenWords, setSpokenWords] = useState("");
 
-  const voiceLabel = text ? text : isRecord ? "" : "";
-
-  const { colors, isDark } = useTheme();
+  const { colors } = useTheme();
+  const { item } = route.params;
   const card = useRef(null);
 
-  const similarWords = getSimilarWords(item.text);
-  console.log("lop", similarWords);
+  const array = new Array(7).fill(false);
+
+  const verseArray = item.text.split(" ");
+
+  const list = getCorrectList(spokenWords, item.text);
+  console.log("List", list);
 
   const onSpeechStart = (event) => {
     console.log("onSpeechStart");
-    setText("");
+    setSpokenWords("");
   };
   const onSpeechEnd = () => {
     setIsRecord(false);
@@ -46,13 +42,12 @@ const TrainScreen = ({ route, navigation }) => {
   const onSpeechResults = (event) => {
     console.log(" onSpeechResults", event);
     console.log("onSpeechResults");
-    setText(event.value[0]);
+    setSpokenWords(event.value[0]);
   };
   const onSpeechError = (event) => {
     console.log("onSpeechError");
     console.log(event.error);
   };
-
   const onRecordVoice = () => {
     if (isRecord) {
       Voice.stop();
@@ -62,12 +57,9 @@ const TrainScreen = ({ route, navigation }) => {
     }
     setIsRecord(!isRecord);
   };
-
   const onSpeechPartialResults = (event) => {
-    console.log(event.value[0]);
-    setText(event.value[0]);
+    setSpokenWords(event.value[0]);
   };
-
   const onSpeechVolumeChanged = (event) => {
     //console.log('onSpeechVolumeChanged 3333');
     //console.log(event.value);
@@ -85,9 +77,6 @@ const TrainScreen = ({ route, navigation }) => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
-
-  const List = getCorrectList(item.text, similarWords, text);
-  console.log("correct list", List);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -114,7 +103,18 @@ const TrainScreen = ({ route, navigation }) => {
             <Text style={styles.title}>{item.chapter}:</Text>
             <Text style={styles.title}>{item.verse} </Text>
           </View>
-          <Text style={styles.bibleText}>{text}</Text>
+          <Text style={styles.bibleText}>
+            {list.map((m, i) => {
+              return (
+                <Text
+                  key={i}
+                  style={m ? styles.trainTextTrue : styles.trainTextFalse}
+                >
+                  {verseArray[i] + " "}
+                </Text>
+              );
+            })}
+          </Text>
         </TouchableOpacity>
       </CardFlip>
       <TouchableOpacity
@@ -122,6 +122,8 @@ const TrainScreen = ({ route, navigation }) => {
         onPress={() => {
           card.current.flip();
           setIsTraining((prevState) => (prevState = !prevState));
+          setSpokenWords("");
+          Voice.stop();
           !isTraining && onRecordVoice();
         }}
       >
@@ -161,6 +163,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#64ffda",
   },
+  trainTextTrue: { fontSize: 20, color: "white" },
+  trainTextFalse: { fontSize: 20, color: "red" },
   title: {
     fontSize: 20,
     fontWeight: "bold",

@@ -7,15 +7,18 @@ export default function getSimilarWords(text) {
   const [loading, setloading] = useState(true);
 
   const fetchData = () => {
-    const data = text.split(" ");
-    console.log(data);
-    const wordArray = [];
+    const verseArray = text.toLowerCase().split(" ");
+    const verseArrayWithoutSymbols = verseArray.map((w) =>
+      w.replace(/[^a-zA-Z]+/g, "")
+    );
 
-    data.forEach((word) => {
+    let wordArray = new Array(verseArray.length);
+
+    verseArrayWithoutSymbols.forEach((word, i) => {
       axios
         .get(`http://api.datamuse.com/words?sl=${word}`)
         .then((res) => {
-          wordArray.push(res.data);
+          wordArray[i] = res.data;
         })
         .catch((err) => {
           setError(err);
